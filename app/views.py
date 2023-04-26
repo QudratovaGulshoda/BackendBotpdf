@@ -21,14 +21,23 @@ class BotUserInfo(APIView):
         return Response(serializer.data)
 class BotUserCount(APIView):
     def get(self,request):
-        from datetime import datetime,timedelta
-        today_time=datetime.now().strftime("%Y-%m-%d")
-        month_time = datetime.now() - timedelta(days=31)
-        month_time = month_time.strftime("%Y-%m-%d")
-        all = BotUser.objects.all().count()
-        today=BotUser.objects.filter(added=today_time).count()
-        month = BotUser.objects.filter(added__range=[month_time,today_time]).count()
-        text =  f"✅ Bugun qo'shilganlar: {today}\n" \
-                f"✅ Shu oy qo'shilganlar: {month}\n" \
-                f"✅ Umumiy obunachilar: {all}"
+        from datetime import datetime,timedelta,date
+        today = date.today()
+        nextday = today+ timedelta(days=1)
+        oneweek = today - timedelta(days=7)
+        oneday = today + timedelta(days=1)
+        onemonth = today - timedelta(days=30)
+        onedayfilter = BotUser.objects.filter(added__range=[today,oneday]).count()
+        oneweekfilter = BotUser.objects.filter(added__range=[oneweek,nextday]).count()
+        onemonthfilter = BotUser.objects.filter(added__range=[onemonth,nextday]).count()
+        allfilter = BotUser.objects.all().count()
+        # today_time=datetime.now().strftime("%Y-%m-%d")
+        # month_time = datetime.now() - timedelta(days=31)
+        # month_time = month_time.strftime("%Y-%m-%d")
+        # all = BotUser.objects.all().count()
+        # today=BotUser.objects.filter(added=today_time).count()
+        # month = BotUser.objects.filter(added__range=[month_time,today_time]).count()
+        text =  f"✅ Bugun qo'shilganlar: {onedayfilter}\n" \
+                f"✅ Shu oy qo'shilganlar: {onemonthfilter}\n" \
+                f"✅ Umumiy obunachilar: {allfilter}"
         return Response(data={'info':text},status=status.HTTP_200_OK)
