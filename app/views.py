@@ -37,7 +37,7 @@ class BotUserCount(APIView):
         # all = BotUser.objects.all().count()
         # today=BotUser.objects.filter(added=today_time).count()
         # month = BotUser.objects.filter(added__range=[month_time,today_time]).count()
-        text =  f"✅ Bugun qo'shilganlar: {onedayfilter}/n" \
-                f"✅ Shu oy qo'shilganlar: {onemonthfilter}/n" \
+        text =  f"✅ Bugun qo'shilganlar: {onedayfilter}\n" \
+                f"✅ Shu oy qo'shilganlar: {onemonthfilter}\n" \
                 f"✅ Umumiy obunachilar: {allfilter}"
         return Response(data={'info':text},status=status.HTTP_200_OK)
