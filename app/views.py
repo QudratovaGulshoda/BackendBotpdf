@@ -30,7 +30,8 @@ class BotUserCount(APIView):
         onedayfilter = BotUser.objects.filter(added__range=[today,oneday]).count()
         oneweekfilter = BotUser.objects.filter(added__range=[oneweek,nextday]).count()
         onemonthfilter = BotUser.objects.filter(added__range=[onemonth,nextday]).count()
-        allfilter = BotUser.objects.all().count()
+        allfilter = BotUser.objects.all().count()#salom
+        
         # today_time=datetime.now().strftime("%Y-%m-%d")
         # month_time = datetime.now() - timedelta(days=31)
         # month_time = month_time.strftime("%Y-%m-%d")
